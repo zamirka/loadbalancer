@@ -7,8 +7,8 @@ import (
 	"github.com/zamirka/loadbalancer"
 )
 
-const nWorker = 2
-const nRequester = 10
+const nWorker = 10
+const nRequester = 100
 
 func main() {
 
@@ -27,7 +27,7 @@ func op() int {
 
 func requester(work chan loadbalancer.Request) {
 	c := make(chan int)
-	for i := 0; i < 5; i++ {
+	for {
 		time.Sleep(time.Duration(rand.Int63n(int64(nWorker * 2 * time.Second))))
 		work <- loadbalancer.Request{op, c}
 		<-c
